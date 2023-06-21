@@ -1,0 +1,233 @@
+﻿
+@{
+    ViewData["Title"] = "TemizSureci";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+</head>
+@{
+    IEnumerable<TemizlikBilgileriListViewModel> temizlikBilgileriList = ViewData["TemizListesi"] as IEnumerable<TemizlikBilgileriListViewModel>;
+}
+<body class="hold-transition sidebar-mini">
+    <span id="Message" class="d-none">@TempData["Message"]</span>
+    <span id="Sonuc" class="d-none">@TempData["Sonuc"]</span>
+    <div class="wrapper">
+        <div class="container-fluid">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <form>
+                <div class="col-md-12">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Mefruşat Bilgisi Sorgulama</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 style="color:cadetblue"><strong>Etiket No</strong></h6>
+                                    <input class="form-control form-control-sm" type="text" name="etiketno" id="etiketno" placeholder="Kimlik no bilgisini giriniz...">
+                                </div>
+                                <div class="col-md-2" style="margin-top:25px;">
+                                    <a style="height: 35px; background-color: #007bff; color: white " href="#" onclick="listele()" class="btn m-btn m-btn--icon pull-right">
+                                        <span>
+                                            <i class="la la-calendar-check-o"></i>
+                                            <span>Listele</span>
+                                        </span>
+                                    </a>
+                                    @*<a id="btnIptal" style="height:35px;" class="btn btn-warning">Listele</a>*@
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 style="color:cadetblue"><strong>Mefruşat Türü</strong></h6>
+                                    <input class="form-control form-control-sm" type="text" name="mefrusattur" id="mefrusattur" placeholder="Mefruşat bilgisi..." readonly="readonly">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <form>
+                <div class="col-md-12">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Temizlik Bilgileri Ekle</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6 style="color:cadetblue"><strong>Yıkama Durumu</strong></h6>
+                                    <div class="form-group">
+                                        <select class="custom-select" id="yikamadurumu">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 style="color:cadetblue"><strong>Teslim Durumu</strong></h6>
+                                    <div class="form-group">
+                                        <select class="custom-select" id="teslimdurumu">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 style="color:cadetblue"><strong>Tartım Tarihi</strong></h6>
+                                    <input class="form-control" type="date" id="tartimtarihi" name="tartimtarihi" placeholder="Tarih Seçiniz...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="amlajlandimi" name="amlajlandimi" value="amlajlandimi">
+                                        <label for="amlajlandimi" class="custom-control-label">Ambalajlandı</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="bohcalandimi" name="bohcalandimi" value="bohcalandimi">
+                                        <label for="bohcalandimi" class="custom-control-label">Bohcalandı</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <a style="height: 35px; float: right; background-color: #007bff; color: white " href="#" onclick="kaydet()" class="btn m-btn m-btn--icon pull-right">
+                                            <span>
+                                                <i class="la la-calendar-check-o"></i>
+                                                <span>Kaydet</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <form>
+                <div class="col-md-12">
+                    <div class="card card-secondary">
+                        <div class="card-header" style="font-size:12px;">
+                            <h3 class="card-title">Temiz Listesi</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Etiket No</th>
+                                        <th>Mefruşat Türü</th>
+                                        <th>Yıkama Durumu</th>
+                                        <th>Teslim Durumu</th>
+                                        <th>Tartım Tarihi</th>
+                                        <th>Ambalajlandı Mı</th>
+                                        <th>Bohcalandı Mı</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in temizlikBilgileriList)
+                                    {
+                                        <tr>
+                                            <td>@item.EtiketNo</td>
+                                            <td>@item.MefrusatTur</td>
+                                            <td>@item.YıkamaDurumu</td>
+                                            <td>@item.TeslimDurumu</td>
+                                            <td>@item.TartimTarihi</td>
+                                            @if (item.AmbalajlandiMi == true)
+                                            {
+                                                <td><input type="checkbox" readonly="readonly" checked="checked" /></td>
+                                            }
+                                            else
+                                            {
+                                                <td><input type="checkbox" readonly="readonly" /></td>
+                                            }
+                                            @if (item.BohcalandiMi == true)
+                                            {
+                                                <td><input type="checkbox" readonly="readonly" checked="checked" /></td>
+                                            }
+                                            else
+                                            {
+                                                <td><input type="checkbox" readonly="readonly" /></td>
+                                            }
+
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <script>
+
+
+                    $(function () {
+                        $("#example1").DataTable({
+                            "responsive": true, "lengthChange": false, "autoWidth": false,
+                            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                        $('#example2').DataTable({
+                            "paging": true,
+                            "lengthChange": false,
+                            "searching": true,
+                            "ordering": true,
+                            "info": true,
+                            "autoWidth": false,
+                            "responsive": true,
+                        });
+                    });
+                </script>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            var sonuc = $('#Sonuc').text();
+            if (message !== '') {
+                if (sonuc == 1) {
+                    toastr.success(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+                else {
+                    toastr.warning(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+            }
+
+        })
+    </script>
+    <script src="~/js/TemizlikSureci/mefrusat_tur_getir.js"></script>
+
+</body>
+

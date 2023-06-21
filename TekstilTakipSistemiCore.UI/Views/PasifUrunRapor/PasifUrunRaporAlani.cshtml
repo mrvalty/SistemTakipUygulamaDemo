@@ -1,0 +1,134 @@
+﻿@{
+    ViewData["Title"] = "PasifUrunRaporAlani";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <span id="Message" class="d-none">@TempData["Message"]</span>
+    <span id="Sonuc" class="d-none">@TempData["Sonuc"]</span>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="container-fluid">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
+
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- Main content -->
+
+            <form>
+                <div class="col-md-12">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Etiket No Sorgulama</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="inputName">Mefruşat Türü</label>
+                                    <select id="mefrusatlist" name="mefrusatlist" class="form-control custom-select"></select>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <a style="height: 35px; float: right; background-color: #007bff; color: white " href="#" onclick="TezlikDetaylistele()" class="btn m-btn m-btn--icon pull-right">
+                                            <span>
+                                                <i class="la la-calendar-check-o"></i>
+                                                <span>Listele</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Pasif Ürün Listesi</h3>
+                        </div>
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Etiket No</th>
+                                        <th>Mefruşat Türü</th>
+                                        <th>Yıkama Durumu</th>
+                                        <th>Yıkanma Sayısı</th>
+                                        <th>Kirlenme Sayısı</th>
+                                        <th>Pasif Ürün Sayısı</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <!-- /.content -->
+        </div>
+    </div>
+    <script>
+
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            var sonuc = $('#Sonuc').text();
+            if (message !== '') {
+                if (sonuc == 1) {
+                    toastr.success(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+                else {
+                    toastr.warning(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+            }
+
+        })
+    </script>
+
+    <script src="~/js/TemizlikDetayRapor/TemizlikDetayRapor.js"></script>
+</body>

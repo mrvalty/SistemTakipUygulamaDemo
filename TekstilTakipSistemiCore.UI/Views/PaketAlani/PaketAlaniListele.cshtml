@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewData["Title"] = "PaketAlaniListele";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    IEnumerable<PaketAlaniListViewModel> paketlemeList = ViewData["PaketListesi"] as IEnumerable<PaketAlaniListViewModel>;
+}
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<form>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Temiz Paket Listesi</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Paket No</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in paketlemeList)
+                    {
+                        <tr>
+                            <td>@item.PaketNo</td>
+                            <td><a title="Detay" data-toggle="modal" data-target="#exampleModal" onclick="paketdetay(@item.PaketNo)"><i class="fa fa-info-circle"></i></a></td>
+                        </tr>
+
+                    }
+                </tbody>
+
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+    @*<script>
+            $(function () {
+                $("#example1").DataTable({
+                    "responsive": true, "lengthChange": false, "autoWidth": false,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                $('#example2').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "responsive": true,
+                });
+            });
+        </script>*@
+</form>
+<form>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Temiz Paket Detay</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="modal-detay" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Paket No</th>
+                                        <th>Etiket No</th>
+                                        <th>Mefruşat Türü</th>
+                                        <th>Oda Numarası</th>
+                                        <th>Oluşturan</th>
+                                        <th>Oluşturma Zamanı</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Tamam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#modal-detay").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+</form>
+
+<script src="~/js/PaketlemeAlani/paketleme_detay.js"></script>
+
+

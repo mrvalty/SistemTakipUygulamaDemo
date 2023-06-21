@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewData["Title"] = "KimliklendirmeTanimi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <span id="Message" class="d-none">@TempData["Message"]</span>
+    <span id="Sonuc" class="d-none">@TempData["Sonuc"]</span>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="container-fluid">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <form method="post" asp-action="KimliklendirmeTanimi" asp-controller="Kimliklendirme">
+                <section class="content">
+                    <div class="col-md-12">
+                        <div class="col-md-9">
+                            <div class="card card-secondary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Kimliklendirme Tanım</h3>
+
+                                    @*<div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>*@
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="inputName">Etiket No</label>
+                                        <input type="text" name="etiketno" id="etiketno" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName">Mefruşat Türü</label>
+                                        <select id="mefrusatlist" name="mefrusatlist" class="form-control custom-select"></select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputDescription">Açıklama</label>
+                                        <textarea id="hasarAciklama" class="form-control" name="hasarAciklama"></textarea>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-9">
+                            <button type="submit" class="btn btn-primary btn-sm float-right ng-binding" onclick="kimliklendirmeKaydet()">Kaydet</button>
+                            @*<a style="height: 35px; float:right; background-color: #007bff; color: white " href="#" onclick="kimliklendirmeKaydet()" class="btn m-btn m-btn--icon pull-right">
+                                <span>
+                                    <i class="la la-calendar-check-o"></i>
+                                    <span>Kaydet</span>
+                                </span>
+                            </a>*@
+                        </div>
+                    </div>
+
+                </section>
+            </form>
+            <!-- /.content -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            var sonuc = $('#Sonuc').text();
+            if (message !== '') {
+                if (sonuc == 1) {
+                    toastr.success(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+                else {
+                    toastr.warning(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>
+<script src="~/js/MefrusatListele/MefrusatListele.js"></script>
+<script src="~/js/KimliklendirmeAlani/KimliklendirmeTanimlama.js"></script>
+
+

@@ -1,0 +1,255 @@
+﻿
+@{
+    ViewData["Title"] = "PaketAlaniEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    IEnumerable<PaketAlaniListViewModel> paketlemeList = ViewData["PaketListesi"] as IEnumerable<PaketAlaniListViewModel>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <span id="Message" class="d-none">@TempData["Message"]</span>
+    <span id="Sonuc" class="d-none">@TempData["Sonuc"]</span>
+    <div class="wrapper">
+        <div class="container-fluid">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <form>
+                <section class="content">
+                    <div class="col-md-12">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Etiket No Sorgulama</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 style="color:cadetblue"><strong>Etiket No</strong></h6>
+                                        <input class="form-control form-control-sm" type="text" name="etiketno" id="etiketno" placeholder="Kimlik no bilgisini giriniz...">
+                                    </div>
+                                    <div class="col-md-2" style="margin-top:25px;">
+                                        <a style="height:35px;background-color:blue;color:white" href="#" onclick="listele()" class="btn m-btn m-btn--icon pull-right">
+                                            <span>
+                                                <i class="la la-calendar-check-o"></i>
+                                                <span>Listele</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 style="color:cadetblue"><strong>Oda No</strong></h6>
+                                        <input class="form-control form-control-sm" type="text" name="odano" id="odano" placeholder="Oda no bilgisini giriniz...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Paketleme Listesi</h3>
+                                <div class="row" hidden="hidden">
+                                    <div class="col-md-4">
+                                        <h3>Selected Record ids: => </h3>
+                                    </div>
+                                    <div class="col-md-8 selectedDiv" hidden="hidden">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="paketlemelist" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Kimliklendirme Etiket No</th>
+                                            <th>Mefruşat Türü</th>
+                                            <th><input type="checkbox" class="allcheckbox" id="chkAll" /></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+
+                                <a style="height:35px;background-color:blue;color:white;float:right;margin-bottom:5px;" href="#" onclick="paketolustur()" class="btn m-btn m-btn--icon pull-right">
+                                    <span>
+                                        <i class="la la-calendar-check-o"></i>
+                                        <span>Paket Oluştur</span>
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @*paket listeleme*@
+
+
+                    <div class="col-md-12">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Temiz Paket No Listesi</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Paket No</th>
+                                            <th>İşlem</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in paketlemeList)
+                                        {
+                                            <tr>
+                                                <td>@item.PaketNo</td>
+                                                <td><a title="Detay" data-toggle="modal" data-target="#exampleModal" onclick="paketdetay(@item.PaketNo)"><i class="fa fa-info-circle"></i></a></td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        @*<script>
+                                $(function () {
+                                    $("#example1").DataTable({
+                                        "responsive": true, "lengthChange": false, "autoWidth": false,
+                                        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                                    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                                    $('#example2').DataTable({
+                                        "paging": true,
+                                        "lengthChange": false,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": true,
+                                        "autoWidth": false,
+                                        "responsive": true,
+                                    });
+                                });
+                            </script>*@
+
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Temiz Paket Detay</h3>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body">
+                                                <table id="modal-detay" class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Paket No</th>
+                                                            <th>Etiket No</th>
+                                                            <th>Mefruşat Türü</th>
+                                                            <th>Oda Numarası</th>
+                                                            <th>Oluşturan</th>
+                                                            <th>Oluşturma Zamanı</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tamam</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $(function () {
+                                $("#modal-detay").DataTable({
+                                    "responsive": true, "lengthChange": false, "autoWidth": false,
+                                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                                $('#example2').DataTable({
+                                    "paging": true,
+                                    "lengthChange": false,
+                                    "searching": true,
+                                    "ordering": true,
+                                    "info": true,
+                                    "autoWidth": false,
+                                    "responsive": true,
+                                });
+                            });
+                        </script>
+
+
+                        <script src="~/js/PaketlemeAlani/paketleme_detay.js"></script>
+
+                    </div>
+
+
+                    @*paket listeleme*@
+
+
+
+
+
+                </section>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            var sonuc = $('#Sonuc').text();
+            if (message !== '') {
+                if (sonuc == 1) {
+                    toastr.success(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+                else {
+                    toastr.warning(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+            }
+
+        })
+    </script>
+
+    <script src="~/js/PaketlemeAlani/paket_olusturma_islemi.js"></script>
+    <script src="~/js/PaketlemeAlani/paketleme_detay.js"></script>
+
+</body>
+</html>

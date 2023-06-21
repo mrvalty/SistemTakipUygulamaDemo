@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "MefrusatTanimi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <span id="Message" class="d-none">@TempData["Message"]</span>
+    <span id="Sonuc" class="d-none">@TempData["Sonuc"]</span>
+
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="container-fluid">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
+                         
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <form method="post" asp-action="MefrusatTanimi" asp-controller="Mefrusat">
+                <section class="content">
+                    <div class="col-md-12">
+                        <div class="col-md-9">
+                            <div class="card card-secondary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Mefruşat Tanım</h3>
+
+                                    @*<div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>*@
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="inputName">Mefruşat Türü</label>
+                                        <input type="text" name="mefrusattur" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputDescription">Mefruşat Kodu</label>
+                                        <input type="text" name="mefrusatkod" class="form-control">
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-9">
+                            <button type="submit" class="btn btn-primary btn-sm float-right ng-binding" id="linkButton">Kaydet</button>
+                        </div>
+                    </div>
+
+                </section>
+            </form>
+            <!-- /.content -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            var sonuc = $('#Sonuc').text();
+            if (message !== '') {
+                if (sonuc == 1) {
+                    toastr.success(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+                else {
+                    toastr.warning(message);
+                    toastr.options = {
+                        "timeOut": "5000"
+                    }
+                }
+            }
+            
+        })
+    </script>
+</body>
+</html>
+

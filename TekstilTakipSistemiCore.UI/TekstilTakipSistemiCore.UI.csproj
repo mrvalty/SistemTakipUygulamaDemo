@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\Kimlik\**" />
+    <Content Remove="Views\Kimlik\**" />
+    <EmbeddedResource Remove="Views\Kimlik\**" />
+    <None Remove="Views\Kimlik\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="toastr" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TekstilTakipSistemiCore.DATA\TekstilTakipSistemiCore.DATA.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TekstilTakipSistemiCore.DAL">
+      <HintPath>..\TekstilTakipSistemiCore.DAL\bin\Debug\TekstilTakipSistemiCore.DAL.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
